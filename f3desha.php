@@ -67,12 +67,11 @@
 				if(in_array($options['branch'], $pristine_branches_list)){
 					//Option branch already exists. No need to create new branch
 					$checkout_command = 'git checkout '.$options['branch'];
-					exec($checkout_command);
 				} else {
 					//Create new branch. Get the name from branch
 					$checkout_command = 'git checkout -b '.$options['branch'].' origin/'.$options['branch'];
-					exec($checkout_command);
 				}
+				exec($checkout_command);
 			} elseif(!array_key_exists('branch', $options)){
 				echo 'Enter "-branch=$branch_name" option for function running properly'."\n";
 			}

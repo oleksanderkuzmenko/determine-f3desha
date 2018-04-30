@@ -16,9 +16,11 @@
       <file leaf-file-name="f3desha.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/f3desha.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="27">
-              <caret line="1" column="43" lean-forward="true" selection-start-line="1" selection-start-column="43" selection-end-line="1" selection-end-column="43" />
-              <folding />
+            <state relative-caret-position="375">
+              <caret line="73" column="16" lean-forward="true" selection-start-line="73" selection-start-column="16" selection-end-line="73" selection-end-column="16" />
+              <folding>
+                <element signature="e#7#46#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -155,12 +157,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1525108497211</updated>
-      <workItem from="1525108502238" duration="12782000" />
+      <workItem from="1525108502238" duration="12873000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12782000" />
+    <option name="totallyTimeSpent" value="12873000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -241,9 +243,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/f3desha.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" column="43" lean-forward="true" selection-start-line="1" selection-start-column="43" selection-end-line="1" selection-end-column="43" />
-          <folding />
+        <state relative-caret-position="375">
+          <caret line="73" column="16" lean-forward="true" selection-start-line="73" selection-start-column="16" selection-end-line="73" selection-end-column="16" />
+          <folding>
+            <element signature="e#7#46#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
