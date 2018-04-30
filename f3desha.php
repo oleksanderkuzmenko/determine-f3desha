@@ -1,5 +1,10 @@
 <?php
-//Script for routines optimization
+	///////////////////////////////////////
+	///// Script for Determine apps routines optimization
+	///// Started on 30.04.2018
+	///// Author: Alexander Kuzmenko aka F3desha (skype: kas_illuzion)
+	//////////////////////////////////////
+
 	const ROOT_DIR = __DIR__;
 	const PATH_TO_APPS = 'www'.DIRECTORY_SEPARATOR.'workspace'.DIRECTORY_SEPARATOR.'apps';
 	$bootstrap = false;
