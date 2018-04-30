@@ -13,7 +13,7 @@
 		$arg[0] !== '-' && substr($arg, -4) !== '.php'
 			? $bootstrap = $arg : null;
 
-		//2. If param is flag - send it to flags array
+		//2. If param is option - send it to options array
 		if($arg[0] === '-' && $arg[1] !== '-')
 		{
 			$option = explode('=', $arg);
@@ -21,7 +21,7 @@
 			$options[$option[0]] = $option[1];
 		}
 
-		//3. If param is option - send it to options array
+		//3. If param is flag - send it to flags array
 		if($arg[0] === '-' && $arg[1] === '-' && $arg[2] !== '-')
 		{
 			$flag = explode('=', $arg);
