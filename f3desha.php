@@ -19,9 +19,7 @@
 
 	const ROOT_DIR = __DIR__;
 	const PATH_TO_APPS = 'www'.DIRECTORY_SEPARATOR.'workspace'.DIRECTORY_SEPARATOR.'apps';
-	$exclude_modules = [
-		'level4'
-	];
+	$excluded_apps = [];
 	$bootstrap = false;
 	$options = [];
 	$flags = [];
@@ -50,15 +48,19 @@
 		}
 	}
 
+	if(!empty($options['exclude_apps'])){
+		$excluded_apps = explode(',', $options['exclude_apps']);
+	}
+
 	function git_checkout($options, $flags){
 
-		global $exclude_modules;
+		global $excluded_apps;
 
 		$all_modules = directories_on_path(PATH_TO_APPS);
 
 		if($all_modules){
 			foreach ($all_modules as $i=>$module_directory){
-				if(!in_array($module_directory, $exclude_modules)){
+				if(!in_array($module_directory, $excluded_apps)){
 					chdir(ROOT_DIR);
 					chdir(PATH_TO_APPS);
 					chdir($module_directory);
