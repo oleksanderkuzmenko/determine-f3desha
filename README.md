@@ -1,7 +1,7 @@
 This script allows you to run different routine tasks
 
 MANUAL
-1. Clone this file to your vagrant root (the same directory where www folder *www/workspace/apps* )
+1. Clone f3desha.php file to your vagrant root (the same directory where www folder *www/workspace/apps* )
 2. Go to the directory that contains f3desha.php with console
 3. Type:
   php f3desha.php git_checkout -branch=<branch_name>
