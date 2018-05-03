@@ -34,17 +34,25 @@
 		//2. If param is option - send it to options array
 		if($arg[0] === '-' && $arg[1] !== '-')
 		{
-			$option = explode('=', $arg);
-			$option[0] = ltrim($option[0], '-');
-			$options[$option[0]] = $option[1];
+			if (strpos($arg, '=') !== false){
+				$option = explode('=', $arg);
+				$option[0] = ltrim($option[0], '-');
+				$options[$option[0]] = $option[1];
+			} else {
+				$options[trim($arg)] = true;
+			}
 		}
 
 		//3. If param is flag - send it to flags array
 		if($arg[0] === '-' && $arg[1] === '-' && $arg[2] !== '-')
 		{
-			$flag = explode('=', $arg);
-			$flag[0] = ltrim($flag[0], '-');
-			$flags[$flag[0]] = $flag[1];
+			if (strpos($arg, '=') !== false){
+				$flag = explode('=', $arg);
+				$flag[0] = ltrim($flag[0], '-');
+				$flags[$flag[0]] = $flag[1];
+			} else {
+				$flags[trim($arg)] = true;
+			}
 		}
 	}
 
@@ -104,12 +112,12 @@
 		}
 	}
 
-	function git_show_active_branches($options, $flags){
+	function git_branch($options, $flags){
 		$show_only = false;
-		$show_remotes = '';
+		$show_remotes='';
 
-		array_key_exists('show_for', $options) ? $show_only = $options['show_for'] : null;
-		array_key_exists('show_remotes', $flags) ? $show_remotes = ' -a' : null;
+		array_key_exists('app', $options) ? $show_only = $options['app'] : null;
+		array_key_exists('-r', $options) ? $show_remotes = ' -a' : null;
 
 		$all_modules = directories_on_path(PATH_TO_APPS);
 
@@ -138,12 +146,12 @@
 								$pristine_branches_list[] = trim($branch);
 							}
 						}
-						if (array_key_exists('all_branches', $flags)) {
-							if ($flags['all_branches']) {
+						if (array_key_exists('-l', $options)) {
+
 								foreach ($pristine_branches_list as $branch_l) {
 									echo '- ' . $branch_l . "\n";
 								}
-							}
+
 						}
 					}
 			}
@@ -170,8 +178,8 @@
 			case 'git_checkout':
 				git_checkout($options, $flags);
 				break;
-			case 'git_show_active_branches':
-				git_show_active_branches($options, $flags);
+			case 'git_branch':
+				git_branch($options, $flags);
 				break;
 			default:
 				echo 'Function '.$bootstrap.' not found.';
