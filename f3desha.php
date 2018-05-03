@@ -34,7 +34,7 @@
 		$excluded_apps = [];
 		$checkout_only = false;
 
-		array_key_exists('checkout_only', $options) ? $checkout_only = $options['checkout_only'] : null;
+		array_key_exists('app', $options) ? $checkout_only = $options['app'] : null;
 		array_key_exists('exclude_apps', $options) ? $excluded_apps = explode(',',$options['exclude_apps']) : null;
 
 		$all_modules = directories_on_path(PATH_TO_APPS);
@@ -132,13 +132,13 @@
 		$params = [];
 		$options = [];
 		$flags = [];
-		$bootstrap = false;
+		$bootstrap = [];
 
 		foreach ($argv as $i=>$arg )
 		{
-			//1. If param isnt flag or option - its function name
+			//1. If param isnt flag or option - its command name
 			$arg[0] !== '-' && substr($arg, -4) !== '.php'
-				? $bootstrap = $arg : null;
+				? $bootstrap[] = $arg : null;
 
 			//2. If param is option - send it to options array
 			if($arg[0] === '-' && $arg[1] !== '-')
@@ -166,7 +166,7 @@
 		}
 		$params['options'] = $options;
 		$params['flags'] = $flags;
-		$params['bootstrap'] = $bootstrap;
+		$params['bootstrap'] = implode('_', $bootstrap);
 		return $params;
 	}
 
