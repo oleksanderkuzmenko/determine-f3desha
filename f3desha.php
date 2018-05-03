@@ -102,6 +102,38 @@
 		}
 	}
 
+	function git_show_active_branches($options, $flags){
+
+		$all_modules = directories_on_path(PATH_TO_APPS);
+
+		if($all_modules){
+			foreach ($all_modules as $i=>$module_directory){
+
+					chdir(ROOT_DIR);
+					chdir(PATH_TO_APPS);
+					chdir($module_directory);
+					//We are now in modules directory
+
+					//Get list of all branches
+					$branches_list = [];
+					exec('git branch', $i);
+					$dirty_branches_list = $i;
+
+					//Get active branch
+					$pristine_branches_list = [];
+					foreach ($dirty_branches_list as $branch){
+						if($branch[0] === '*' && $branch[1] === ' '){
+							$active_branch = ltrim($branch, '* ');
+							$pristine_branches_list[] = $active_branch;
+							echo $module_directory.': on branch '."\033[32m".$active_branch."\033[0m\n";
+						} else {
+							$pristine_branches_list[] = trim($branch);
+						}
+					}
+			}
+		}
+	}
+
 	function directories_on_path($path){
 		$dirs = array();
 		// directory handle
@@ -121,6 +153,9 @@
 		switch ($bootstrap){
 			case 'git_checkout':
 				git_checkout($options, $flags);
+				break;
+			case 'git_show_active_branches':
+				git_show_active_branches($options, $flags);
 				break;
 			default:
 				echo 'Function '.$bootstrap.' not found.';
