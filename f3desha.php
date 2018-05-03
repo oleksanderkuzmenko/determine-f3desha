@@ -20,41 +20,10 @@
 	const ROOT_DIR = __DIR__;
 	const PATH_TO_APPS = 'www'.DIRECTORY_SEPARATOR.'workspace'.DIRECTORY_SEPARATOR.'apps';
 
-	$bootstrap = false;
-	$options = [];
-	$flags = [];
-
-	//form input
-	foreach ($argv as $i=>$arg )
-	{
-		//1. If param isnt flag or option - its function name
-		$arg[0] !== '-' && substr($arg, -4) !== '.php'
-			? $bootstrap = $arg : null;
-
-		//2. If param is option - send it to options array
-		if($arg[0] === '-' && $arg[1] !== '-')
-		{
-			if (strpos($arg, '=') !== false){
-				$option = explode('=', $arg);
-				$option[0] = ltrim($option[0], '-');
-				$options[$option[0]] = $option[1];
-			} else {
-				$options[trim($arg)] = true;
-			}
-		}
-
-		//3. If param is flag - send it to flags array
-		if($arg[0] === '-' && $arg[1] === '-' && $arg[2] !== '-')
-		{
-			if (strpos($arg, '=') !== false){
-				$flag = explode('=', $arg);
-				$flag[0] = ltrim($flag[0], '-');
-				$flags[$flag[0]] = $flag[1];
-			} else {
-				$flags[trim($arg)] = true;
-			}
-		}
-	}
+	$params = parse_params($argv);
+	$options = $params['options'];
+	$flags = $params['flags'];
+	$bootstrap = $params['bootstrap'];
 
 	if(!empty($options['exclude_apps'])){
 		$excluded_apps = explode(',', $options['exclude_apps']);
@@ -156,6 +125,49 @@
 					}
 			}
 		}
+	}
+
+	function parse_params($argv)
+	{
+		$params = [];
+		$options = [];
+		$flags = [];
+		$bootstrap = false;
+
+		foreach ($argv as $i=>$arg )
+		{
+			//1. If param isnt flag or option - its function name
+			$arg[0] !== '-' && substr($arg, -4) !== '.php'
+				? $bootstrap = $arg : null;
+
+			//2. If param is option - send it to options array
+			if($arg[0] === '-' && $arg[1] !== '-')
+			{
+				if (strpos($arg, '=') !== false){
+					$option = explode('=', $arg);
+					$option[0] = ltrim($option[0], '-');
+					$options[$option[0]] = $option[1];
+				} else {
+					$options[trim($arg)] = true;
+				}
+			}
+
+			//3. If param is flag - send it to flags array
+			if($arg[0] === '-' && $arg[1] === '-' && $arg[2] !== '-')
+			{
+				if (strpos($arg, '=') !== false){
+					$flag = explode('=', $arg);
+					$flag[0] = ltrim($flag[0], '-');
+					$flags[$flag[0]] = $flag[1];
+				} else {
+					$flags[trim($arg)] = true;
+				}
+			}
+		}
+		$params['options'] = $options;
+		$params['flags'] = $flags;
+		$params['bootstrap'] = $bootstrap;
+		return $params;
 	}
 
 	function directories_on_path($path){
