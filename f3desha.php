@@ -103,12 +103,13 @@
 	}
 
 	function git_show_active_branches($options, $flags){
+		$show_only = false;
+		array_key_exists('show_for', $options) ? $show_only = $options['show_for'] : null;
 
 		$all_modules = directories_on_path(PATH_TO_APPS);
 
 		if($all_modules){
 			foreach ($all_modules as $i=>$module_directory){
-
 					chdir(ROOT_DIR);
 					chdir(PATH_TO_APPS);
 					chdir($module_directory);
@@ -121,23 +122,25 @@
 
 					//Get active branch
 					$pristine_branches_list = [];
-					foreach ($dirty_branches_list as $branch){
-						if($branch[0] === '*' && $branch[1] === ' '){
-							$active_branch = ltrim($branch, '* ');
-							$pristine_branches_list[] = $active_branch;
-							echo $module_directory.': on branch '."\033[32m".$active_branch."\033[0m\n";
-						} else {
-							$pristine_branches_list[] = trim($branch);
-						}
-					}
+					if(!$show_only || $show_only === $module_directory) {
 
-				if(array_key_exists('all_branches', $flags)){
-					if($flags['all_branches']){
-						foreach ($pristine_branches_list as $branch_l){
-							echo '- '.$branch_l."\n";
+						foreach ($dirty_branches_list as $branch) {
+							if ($branch[0] === '*' && $branch[1] === ' ') {
+								$active_branch = ltrim($branch, '* ');
+								$pristine_branches_list[] = $active_branch;
+								echo $module_directory . ': on branch ' . "\033[32m" . $active_branch . "\033[0m\n";
+							} else {
+								$pristine_branches_list[] = trim($branch);
+							}
+						}
+						if (array_key_exists('all_branches', $flags)) {
+							if ($flags['all_branches']) {
+								foreach ($pristine_branches_list as $branch_l) {
+									echo '- ' . $branch_l . "\n";
+								}
+							}
 						}
 					}
-				}
 			}
 		}
 	}
