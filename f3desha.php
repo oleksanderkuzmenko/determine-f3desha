@@ -104,7 +104,10 @@
 
 	function git_show_active_branches($options, $flags){
 		$show_only = false;
+		$show_remotes = '';
+
 		array_key_exists('show_for', $options) ? $show_only = $options['show_for'] : null;
+		array_key_exists('show_remotes', $flags) ? $show_remotes = ' -a' : null;
 
 		$all_modules = directories_on_path(PATH_TO_APPS);
 
@@ -117,7 +120,7 @@
 
 					//Get list of all branches
 					$branches_list = [];
-					exec('git branch', $i);
+					exec('git branch'.$show_remotes, $i);
 					$dirty_branches_list = $i;
 
 					//Get active branch
