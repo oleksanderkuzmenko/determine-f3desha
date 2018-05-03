@@ -130,6 +130,14 @@
 							$pristine_branches_list[] = trim($branch);
 						}
 					}
+
+				if(array_key_exists('all_branches', $flags)){
+					if($flags['all_branches']){
+						foreach ($pristine_branches_list as $branch_l){
+							echo '- '.$branch_l."\n";
+						}
+					}
+				}
 			}
 		}
 	}
