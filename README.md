@@ -1,12 +1,6 @@
 This script allows you to run different routine tasks
 
 MANUAL
-1. Clone f3desha.php file to your vagrant root (the same directory where www folder *www/workspace/apps* )
-2. Go to the directory that contains f3desha.php with console
-3. Type:
-  php f3desha.php git_checkout -branch=<branch_name>
+1. cd f3desha
+2. php F3desha.php [Location_Alias] Module_name Command_name -options --flags
 
-BEHAVIOR
-Script will run through all apps in apps folder and change branches to the branch you selected
-in -branch option. If branch is already local it will just switch to it. If branch is only remote
-it will download it and switch. If you already on selected branch, nothing will happen
