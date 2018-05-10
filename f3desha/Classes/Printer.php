@@ -4,8 +4,9 @@
 
 	class Printer
 	{
-		public static function printit($string)
+
+		public static function colorEcho($string, $color = "0;37")
 		{
-			echo $string;
+			return "\033[".$color."m".$string."\033[0m";
 		}
 	}

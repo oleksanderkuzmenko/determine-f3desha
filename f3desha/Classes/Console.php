@@ -3,6 +3,9 @@
 	namespace F3desha\Classes;
 	class Console
 	{
+		const CONSOLE_LIGHT_BLUE = '1;34';
+		const CONSOLE_GREEN = '0;32';
+
 		public $options;
 		public $flags;
 		public $commands;

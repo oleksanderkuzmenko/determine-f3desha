@@ -4,6 +4,7 @@
 	include 'Interfaces/iAllowable.php';
 
 	use iAllowable;
+	use F3desha\Classes\Printer;
 
 	class Git implements iAllowable
 	{
@@ -24,6 +25,7 @@
 				'git',
 				'checkout',
 				'branch',
+				'pull',
 				'[APPS]',
 				'[TRUNK]',
 			];
@@ -34,7 +36,8 @@
 				'app',
 				'l',
 				'r',
-				'branch'
+				'branch',
+				'reset'
 			];
 
 			foreach ($this->console as $type=>$params_set){
@@ -43,7 +46,7 @@
 						case 'commands':
 
 								if(!in_array($set, $allowed['commands'])){
-									echo $set.': unknown param in commands';
+									echo Printer::colorEcho($set.': unknown param in commands');
 									die();
 								}
 
@@ -51,7 +54,7 @@
 						case 'options':
 
 								if(!in_array($key, $allowed['options'])){
-									echo $set.': unknown param in options';
+									echo Printer::colorEcho($set.': unknown param in options');
 									die();
 								}
 
@@ -59,7 +62,7 @@
 						case 'flags':
 
 								if(!in_array($key, $allowed['flags'])){
-									echo $set.': unknown param in flags';
+									echo Printer::colorEcho($set.': unknown param in flags');
 									die();
 								}
 
@@ -89,7 +92,7 @@
 								$active_branch = ltrim($branch, '* ');
 								$pristine_branches_list[] = $active_branch;
 								if(!$show_only || $show_only === $this->module_name){
-									echo $this->module_name.': on branch ' . "\033[32m" . $active_branch . "\033[0m\n";
+									echo Printer::colorEcho($this->module_name, Console::CONSOLE_LIGHT_BLUE).': on branch ' . Printer::colorEcho($active_branch, Console::CONSOLE_GREEN)."\n";
 								}
 							} else {
 								$pristine_branches_list[] = trim($branch);
@@ -98,7 +101,7 @@
 						if (array_key_exists('l', $this->console->options)) {
 							foreach ($pristine_branches_list as $branch_l) {
 								if(!$show_only || $show_only === $this->module_name) {
-									echo '- ' . $branch_l . "\n";
+									echo Printer::colorEcho('- ' . $branch_l) . "\n";
 								}
 							}
 						}
@@ -140,8 +143,41 @@
 					}
 					exec($checkout_command);
 				}
+			} elseif(array_key_exists('reset', $this->console->options)){
+				$checkout_command = 'git checkout . ';
+				exec($checkout_command);
 			} elseif (!array_key_exists('branch', $this->console->options)) {
-				echo 'Enter "-branch=$branch_name" option for function running properly' . "\n";
+				echo Printer::colorEcho('Enter "-branch=$branch_name" option for function running properly') . "\n";
 			}
+		}
+
+		public function pull()
+		{
+			$show_only = false;
+			array_key_exists('app', $this->console->options)
+				? $show_only = $this->console->options['app'] : null;
+			//We are now in modules directory
+			//Get list of all branches
+			$branches_list = [];
+			exec('git branch', $i);
+			$dirty_branches_list = $i;
+			//Get active branch
+			foreach ($dirty_branches_list as $branch) {
+				if ($branch[0] === '*' && $branch[1] === ' ') {
+					$active_branch = ltrim($branch, '* ');
+				}
+			}
+
+			//If branch option exists, check if it exists in local git
+
+				if(!$show_only || $show_only === $this->module_name){
+					echo Printer::colorEcho($this->module_name, Console::CONSOLE_LIGHT_BLUE) . ":\n";
+
+						//Option branch already exists. No need to create new branch
+						$checkout_command = 'git pull origin ' . $active_branch;
+
+					exec($checkout_command);
+				}
+
 		}
 	}
