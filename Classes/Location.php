@@ -10,6 +10,10 @@
 				'directory' => self::WWW.DIRECTORY_SEPARATOR.'workspace'.DIRECTORY_SEPARATOR.'apps',
 				'single_path' => false
 			],
+			'[APPLI]' => [
+				'directory' => self::WWW.DIRECTORY_SEPARATOR.'workspace'.DIRECTORY_SEPARATOR.'appli',
+				'single_path' => false
+			],
 			'[TRUNK]' => [
 				'directory' => self::WWW.DIRECTORY_SEPARATOR.'workspace'.DIRECTORY_SEPARATOR.'trunk',
 				'single_path' => true

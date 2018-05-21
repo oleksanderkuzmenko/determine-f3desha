@@ -5,6 +5,7 @@
 	{
 		const CONSOLE_LIGHT_BLUE = '1;34';
 		const CONSOLE_GREEN = '0;32';
+		const CONSOLE_RED = '0;31';
 
 		public $options;
 		public $flags;

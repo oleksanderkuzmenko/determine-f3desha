@@ -28,12 +28,14 @@
 				'pull',
 				'[APPS]',
 				'[TRUNK]',
+				'[APPLI]'
 			];
 			$allowed['flags'] = [
 
 			];
 			$allowed['options'] = [
 				'app',
+				'D',
 				'l',
 				'r',
 				'branch',
@@ -105,6 +107,17 @@
 								}
 							}
 						}
+						if (array_key_exists('D', $this->console->options)) {
+							foreach ($pristine_branches_list as $branch_l) {
+								if(!$show_only || $show_only === $this->module_name) {
+									if($branch_l !== $active_branch){
+										echo ' - deleting branch: '.Printer::colorEcho($branch_l, Console::CONSOLE_RED)."\n";
+										$checkout_command = 'git branch -D '.$branch_l;
+										exec($checkout_command);
+									}
+								}
+							}
+						}
 
 
 		}
@@ -139,7 +152,7 @@
 						$checkout_command = 'git checkout ' . $this->console->options['branch'];
 					} else {
 						//Create new branch. Get the name from branch
-						$checkout_command = 'git checkout -b ' . $this->console->options['branch'] . ' origin/' . $this->console->options['branch'];
+						$checkout_command = 'git checkout -b '.$this->console->options['branch'].' origin/' . $this->console->options['branch'];
 					}
 					exec($checkout_command);
 				}
